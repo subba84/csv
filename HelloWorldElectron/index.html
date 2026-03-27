@@ -7,32 +7,53 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 16px;
       height: 100vh;
       margin: 0;
       background: #f0f0f0;
     }
+    select {
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: white;
+      width: 200px;
+      cursor: pointer;
+    }
     button {
-      padding: 12px 28px;
+      padding: 10px 28px;
       font-size: 15px;
       cursor: pointer;
       border: none;
       border-radius: 6px;
       background: #0078d4;
       color: white;
+      width: 200px;
     }
     button:hover  { background: #005fa3; }
     button:active { background: #004a80; }
   </style>
 </head>
 <body>
-  <button onclick="sayHello()">Click Me</button>
+  <select id="languageSelect">
+    <option value="english">English</option>
+    <option value="spanish">Spanish</option>
+    <option value="french">French</option>
+    <option value="german">German</option>
+    <option value="japanese">Japanese</option>
+  </select>
+
+  <button onclick="sayHello()">Say Hello</button>
 
   <script>
     async function sayHello() {
+      const language = document.getElementById('languageSelect').value;
       try {
-        const res = await fetch('http://localhost:5050/api/hello');
+        const res = await fetch(`http://localhost:5050/api/hello?language=${language}`);
         const data = await res.json();
         alert(data.message);
       } catch (e) {
